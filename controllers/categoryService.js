@@ -1,4 +1,4 @@
-const category = require("../models/categoryModel");
+const categoryModel = require("../models/categoryModel");
 const slugify = require('slugify')
 const asyncHandler = require('express-async-handler')
 
@@ -15,11 +15,11 @@ exports. getCategories =asyncHandler ( async (req,res)=>{
 
 
 //@desc Get a specific category by id
-//@route Get /api/v1/categories/id
+//@route Get /api/v1/categories/:id
 //@acess Public
 exports. getCategory = asyncHandler( async(req,res)=>{
     const { id }=req.params;
-    const category = await category.findById(id);
+    const category = await categoryModel.findById(id);
     if(!category){
         res.status(400).json({msg:`No Category for this id : ${id}`});
     }
@@ -33,6 +33,32 @@ exports. getCategory = asyncHandler( async(req,res)=>{
 exports. creatCategories = asyncHandler( async (req,res)=>{
     const name=req.body.name;
     // async await
-    const category = await category.create({name,slug:slugify(name)})
+    const category = await categoryModel.create({name,slug:slugify(name)})
     res.status(201).json({data:category});
 });
+
+//@desc Update Specific Category
+//@route PUT /api/v1/categories/:id
+//@acess Private
+exports. updateCategory =asyncHandler( async(req,res)=>{
+    const { id }=req.params;
+    const { name }=req.body;
+    console.log(name)
+    const category = await categoryModel.findOneAndUpdate({_id:id},{name , slug:slugify(name)},{new:true})
+    if(!category){
+        res.status(400).json({msg:`No Category for this id : ${id}`});
+    }
+    res.status(200).json({data:category});
+})
+
+//@desc Delete Specific Category
+//@route DELETE /api/v1/categories/:id
+//@acess Private
+exports. deleteCategory =asyncHandler( async(req,res)=>{
+    const { id }=req.params;
+    const category = await categoryModel.findByIdAndDelete(id)
+    if(!category){
+        res.status(400).json({msg:`No Category for this id : ${id}`});
+    }
+    res.status(204).send();
+})
