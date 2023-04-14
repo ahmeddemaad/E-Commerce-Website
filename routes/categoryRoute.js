@@ -9,7 +9,7 @@ router.route('/')
             .post(createCategoryValidator,creatCategories);
 
 router.route('/:id')
-            //@desc get (validator,category service)
+            //@desc (validator,category service)
             .get( getCategoryValidator , getCategory)
             .put(updateCategoryValidator,updateCategory)
             .delete(deleteCategoryValidator,deleteCategory)
