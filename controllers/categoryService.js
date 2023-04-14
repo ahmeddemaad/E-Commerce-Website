@@ -29,6 +29,7 @@ exports. getCategory = asyncHandler( async(req,res,next)=>{
     res.status(200).json({data:category});
 })
 
+
 // @desc  Creat Category
 // @route POST /api/v1/categories
 // @acess Private 
@@ -38,6 +39,7 @@ exports. creatCategories = asyncHandler( async (req,res)=>{
     const category = await categoryModel.create({name,slug:slugify(name)})
     res.status(201).json({data:category});
 });
+
 
 //@desc Update Specific Category
 //@route PUT /api/v1/categories/:id
@@ -52,6 +54,7 @@ exports. updateCategory =asyncHandler( async(req,res,next)=>{
     }
     res.status(200).json({data:category});
 })
+
 
 //@desc Delete Specific Category
 //@route DELETE /api/v1/categories/:id
