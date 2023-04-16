@@ -1,6 +1,6 @@
 const express = require('express');
 const {getCategories , getCategory ,creatCategories ,updateCategory ,deleteCategory}=require('../controllers/categoryService')
-const {getCategoryValidator , createCategoryValidator ,updateCategoryValidator,deleteCategoryValidator} = require('../utils/validators/categoryValidator.js')
+const {getCategoryValidator , createCategoryValidator ,updateCategoryValidator,deleteCategoryValidator} = require('../utils/validators/categoryValidator')
 
 const router = express.Router();
 

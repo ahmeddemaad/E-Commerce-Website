@@ -8,7 +8,7 @@ const ApiError = require('../utils/apiError')
 // @desc Get List of Categories
 // @route Get /api/v1/categories
 // @acess Public
-exports. getCategories =asyncHandler ( async (req,res,next)=>{
+exports. getCategories =asyncHandler ( async (req,res)=>{
     const page=req.query.page *1 || 1;
     const limit=req.query.limit *1 || 5;
     const skip=(page-1)*limit;
@@ -34,7 +34,7 @@ exports. getCategory = asyncHandler( async(req,res,next)=>{
 // @route POST /api/v1/categories
 // @acess Private 
 exports. creatCategories = asyncHandler( async (req,res)=>{
-    const name=req.body.name;
+    const {name} = req.body
     // async await
     const category = await categoryModel.create({name,slug:slugify(name)})
     res.status(201).json({data:category});
