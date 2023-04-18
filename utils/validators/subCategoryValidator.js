@@ -15,7 +15,10 @@ exports.createSubCategoryValidator=[
     .notEmpty().withMessage("Required to fill")
     .isLength({min:3}).withMessage("too Short to be a subCategory")
     .isLength({max:32}).withMessage("too long to be a subCategory"),
-    check('category').isMongoId().withMessage("Invalid category Id format"),
+    check('category')
+    .notEmpty().withMessage("Required to fill")
+    .isLength({min:3}).withMessage("too Short to be a subCategory")
+    .isLength({max:32}).withMessage("too long to be a subCategory"),
     middlewareValidator,
 ]
 

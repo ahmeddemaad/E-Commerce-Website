@@ -6,8 +6,12 @@ const subCategoryModel = require("../models/subCategoryModel");
 
 //@desc getSubCategories of specific category
 //@route Get /api/v1/categories/:categoryId/subcategories
-//nested route
-
+exports.CreatFilterObject=(req, res, next) =>{
+    let filterObject = {};
+    if(req.params.categoryId) filterObject={category:req.params.categoryId }
+    req.body.filterObject = filterObject;
+    next();
+}
 
 // @desc Get List of SubCategories
 // @route Get /api/v1/subcategories
@@ -16,10 +20,7 @@ exports. getSubCategories =asyncHandler ( async (req,res)=>{
     const page=req.query.page *1 || 1;
     const limit=req.query.limit *1 || 5;
     const skip=(page-1)*limit;
-    let filterObject = {};
-    if(req.params.categoryId) filterObject={category:req.params.categoryId  }
-
-    const SubCategories = await subCategoryModel.find({filterObject}).skip(skip)
+    const SubCategories = await subCategoryModel.find(req.body.filterObject).skip(skip)
     // .limit(limit).populate({path:"category",select:"name-_id"});
     res.status(200).json({resuls:SubCategories.length, page ,data:SubCategories});
 });
@@ -37,8 +38,10 @@ exports. getSubCategory = asyncHandler( async(req,res,next)=>{
 })
 
 
-
-
+exports.setCategorytoBody=(req, res, next) =>{
+    if(!req.body.category) req.body.category =req.params.categoryId;
+    next();
+}
 // @desc  Creat subCategory
 // @route POST /api/v1/subcategories
 // @acess Private 
